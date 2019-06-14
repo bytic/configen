@@ -1,0 +1,30 @@
+{
+  "name": "bytic/configen",
+  "type": "library",
+  "description": "A tool to generate configuration files in PHP",
+  "homepage": "https://github.com/bytic/debugbar",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gabriel Solomon",
+      "email": "hello@gabrielsolomon.ro"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "ByTIC\\Configen\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ByTIC\\Configen\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "php": "^7.0",
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.2|^7.2",
+    "mockery/mockery": "^0.9|^1.0"
+  }
+}
