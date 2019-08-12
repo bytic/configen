@@ -31,9 +31,29 @@ trait HasPartsTrait
     }
 
     /**
+     * @param string $name
+     * @param array $params
+     */
+    protected function addPartName($name, $params = [])
+    {
+        $method = 'add' . $name;
+        $this->$method(...$params);
+    }
+
+    /**
+     * @param $parts
+     */
+    public function addParts($parts)
+    {
+        foreach ($parts as $part) {
+            $this->addPart($part);
+        }
+    }
+
+    /**
      * @param $part
      */
-    protected function addPart($part)
+    public function addPart($part)
     {
         $this->parts[] = $part;
     }

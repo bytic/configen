@@ -32,8 +32,7 @@ class Htaccess extends ConfigFile
      */
     public function addCommentHeadingOne(...$lines)
     {
-        $content = implode("\n", $lines);
-        $this->addPart(new CommentHeadingOne($content));
+        $this->addPart(new CommentHeadingOne(...$lines));
     }
 
     /**
@@ -41,8 +40,7 @@ class Htaccess extends ConfigFile
      */
     public function addCommentHeadingTwo(...$lines)
     {
-        $content = implode("\n", $lines);
-        $this->addPart(new CommentHeadingTwo($content));
+        $this->addPart(new CommentHeadingTwo(...$lines));
     }
 
     /**

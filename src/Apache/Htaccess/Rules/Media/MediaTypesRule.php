@@ -14,4 +14,12 @@ class MediaTypesRule extends AbstractRule
 with the media type `charset` parameter set to `UTF-8`.
 
 https://httpd.apache.org/docs/current/mod/core.html#adddefaultcharset';
+
+    /**
+     * @inheritDoc
+     */
+    protected function createDirectives()
+    {
+        return [];
+    }
 }

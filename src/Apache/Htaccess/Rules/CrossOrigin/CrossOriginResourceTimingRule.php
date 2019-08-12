@@ -20,4 +20,11 @@ be set to zero.
 https://www.w3.org/TR/resource-timing/
 http://www.stevesouders.com/blog/2014/08/21/resource-timing-practical-tips/';
 
+    /**
+     * @inheritDoc
+     */
+    protected function createDirectives()
+    {
+        return [];
+    }
 }

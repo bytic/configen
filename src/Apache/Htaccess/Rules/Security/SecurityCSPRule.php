@@ -26,4 +26,12 @@ such as: http://cspisawesome.com/.
 https://content-security-policy.com/
 https://www.html5rocks.com/en/tutorials/security/content-security-policy/
 https://w3c.github.io/webappsec-csp/';
+
+    /**
+     * @inheritDoc
+     */
+    protected function createDirectives()
+    {
+        return [];
+    }
 }

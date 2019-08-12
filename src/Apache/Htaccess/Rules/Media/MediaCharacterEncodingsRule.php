@@ -14,4 +14,12 @@ class MediaCharacterEncodingsRule extends AbstractRule
 
 https://www.iana.org/assignments/media-types/media-types.xhtml
 https://httpd.apache.org/docs/current/mod/mod_mime.html#addtype';
+
+    /**
+     * @inheritDoc
+     */
+    protected function createDirectives()
+    {
+        return [];
+    }
 }

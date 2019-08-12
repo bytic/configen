@@ -15,4 +15,12 @@ class SecurityFileAccessRule extends AbstractRule
 You should leave the following uncommented, as you shouldn\'t allow
 anyone to surf through every directory on your server (which may
 includes rather private places such as the CMS\'s directories).';
+
+    /**
+     * @inheritDoc
+     */
+    protected function createDirectives()
+    {
+        return [];
+    }
 }

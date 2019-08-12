@@ -2,6 +2,8 @@
 
 namespace ByTIC\Configen\Apache\Htaccess\Rules\CrossOrigin;
 
+use ByTIC\Configen\Apache\Htaccess\Directives\HeaderDirective;
+
 /**
  * Class CrossOriginRequestsRule
  * @package ByTIC\Configen\Apache\Htaccess\Rules\CrossOrigin
@@ -16,4 +18,12 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
 https://enable-cors.org/
 https://www.w3.org/TR/cors/';
 
+    /**
+     * @inheritDoc
+     */
+    protected function createDirectives()
+    {
+        $header = HeaderDirective::set(null, 'Access-Control-Allow-Origin', '"*"');
+        return [$header];
+    }
 }

@@ -9,7 +9,7 @@ use ByTIC\Configen\Apache\Htaccess\Sections\CrossOriginSection;
  * Class CrossOriginRequestsRule
  * @package ByTIC\Configen\Apache\Htaccess\Rules\CrossOrigin
  */
-class AbstractRule extends GenericRule
+abstract class AbstractRule extends GenericRule
 {
 
     /**
@@ -17,6 +17,7 @@ class AbstractRule extends GenericRule
      */
     public function __construct()
     {
+        parent::__construct();
         static::$section = CrossOriginSection::$name;
     }
 }

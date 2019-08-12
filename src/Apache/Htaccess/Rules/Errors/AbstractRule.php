@@ -9,7 +9,7 @@ use ByTIC\Configen\Apache\Htaccess\Sections\ErrorsSection;
  * Class AbstractRule
  * @package ByTIC\Configen\Apache\Htaccess\Rules\Errors
  */
-class AbstractRule extends GenericRule
+abstract class AbstractRule extends GenericRule
 {
 
     /**

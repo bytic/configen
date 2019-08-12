@@ -6,7 +6,7 @@ namespace ByTIC\Configen\AbstractConfig\Parts;
  * Class Comment
  * @package ByTIC\Configen\AbstractConfig\Parts
  */
-class Comment extends AbstractPart
+class SimpleText extends AbstractPart
 {
     protected $content = '';
 

@@ -39,4 +39,12 @@ https://cure53.de/xfo-clickjacking.pdf.
 https://tools.ietf.org/html/rfc7034
 https://blogs.msdn.microsoft.com/ieinternals/2010/03/30/combating-clickjacking-with-x-frame-options/
 https://www.owasp.org/index.php/Clickjacking';
+
+    /**
+     * @inheritDoc
+     */
+    protected function createDirectives()
+    {
+        return [];
+    }
 }

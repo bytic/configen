@@ -3,13 +3,16 @@
 namespace ByTIC\Configen\Apache\Htaccess\Rules;
 
 use ByTIC\Configen\Apache\Htaccess\Htaccess;
+use ByTIC\Configen\Apache\Htaccess\Rules\Traits\HasDirectivesTraits;
 
 /**
  * Class AbstractSection
  * @package ByTIC\Configen\Apache\Htaccess\Rules
  */
-class AbstractRule
+abstract class AbstractRule
 {
+    use HasDirectivesTraits;
+
     public static $section = '';
 
     public static $name = '';
@@ -20,6 +23,13 @@ class AbstractRule
      * @var Htaccess
      */
     protected $config;
+
+    /**
+     * AbstractRule constructor.
+     */
+    public function __construct()
+    {
+    }
 
     /**
      * @return string
@@ -35,9 +45,12 @@ class AbstractRule
     public function generate($config)
     {
         $this->setConfig($config);
+
         $this->generateTitle();
         $this->getConfig()->addEmptyLine();
         $this->generateDescription();
+
+        $this->getConfig()->addParts($this->generatePartsFromDirectives());
     }
 
     /**
@@ -67,5 +80,6 @@ class AbstractRule
             return;
         }
         $this->getConfig()->addComment(static::$description);
+        $this->getConfig()->addEmptyLine();
     }
 }

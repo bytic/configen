@@ -14,4 +14,12 @@ class CrossOriginImagesRule extends AbstractRule
 
 https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image
 https://blog.chromium.org/2011/07/using-cross-domain-images-in-webgl-and.html';
+
+    /**
+     * @inheritDoc
+     */
+    protected function createDirectives()
+    {
+        return [];
+    }
 }

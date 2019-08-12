@@ -12,4 +12,11 @@ class CrossOriginWebFontsRule extends AbstractRule
     public static $title = 'Cross-origin web fonts';
     public static $description = 'Allow cross-origin access to web fonts.';
 
+    /**
+     * @inheritDoc
+     */
+    protected function createDirectives()
+    {
+        return [];
+    }
 }

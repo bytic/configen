@@ -45,4 +45,12 @@ class SecurityHTTSRule extends AbstractRule
 # (2) https://hstspreload.org/
 # (3) https://tools.ietf.org/html/rfc6797#section-7.2
 # (4) https://stackoverflow.com/questions/24144552/how-to-set-hsts-header-from-htaccess-only-on-https/24145033#comment81632711_24145033';
+
+    /**
+     * @inheritDoc
+     */
+    protected function createDirectives()
+    {
+        return [];
+    }
 }

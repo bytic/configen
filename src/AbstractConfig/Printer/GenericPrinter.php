@@ -2,6 +2,8 @@
 
 namespace ByTIC\Configen\AbstractConfig\Printer;
 
+use ByTIC\Configen\AbstractConfig\Parts\SimpleText;
+
 /**
  * Class GenericPrinter
  * @package ByTIC\Configen\AbstractConfig\Printer
@@ -55,6 +57,15 @@ class GenericPrinter
     public function printEmptyLine($part)
     {
         return "";
+    }
+
+    /**
+     * @param SimpleText $part
+     * @return string
+     */
+    public function printSimpleText($part)
+    {
+        return $part->getContent();
     }
 
     /**
