@@ -33,9 +33,9 @@ class HeaderDirective extends AbstractDirective
      * @param $additionalArgument
      * @return HeaderDirective
      */
-    public static function set($condition, $name, $value, $replacement = null, $additionalArgument = null)
+    public static function set($condition, $name, $value, $additionalArgument = null)
     {
-        $header = static::create($condition, 'set', $name, $value, $replacement, $additionalArgument);
+        $header = static::create($condition, 'set', $name, $value, null, $additionalArgument);
         return $header;
     }
 
@@ -77,7 +77,7 @@ class HeaderDirective extends AbstractDirective
     public function generate()
     {
         $return = 'Header';
-        foreach (['condition', 'action', 'name', 'value', 'replacement', 'aditionalArgument'] as $param) {
+        foreach (['condition', 'action', 'name', 'value', 'replacement', 'additionalArgument'] as $param) {
             if (!empty($this->{$param})) {
                 $return .= ' ' . $this->{$param};
             }

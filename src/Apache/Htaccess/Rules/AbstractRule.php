@@ -51,6 +51,7 @@ abstract class AbstractRule
         $this->generateDescription();
 
         $this->getConfig()->addParts($this->generatePartsFromDirectives());
+        $this->getConfig()->addEmptyLine();
     }
 
     /**
@@ -80,6 +81,5 @@ abstract class AbstractRule
             return;
         }
         $this->getConfig()->addComment(static::$description);
-        $this->getConfig()->addEmptyLine();
     }
 }

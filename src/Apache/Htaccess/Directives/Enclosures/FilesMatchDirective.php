@@ -8,9 +8,9 @@ use ByTIC\Configen\Apache\Htaccess\Directives\AbstractDirective;
  * Class IfModuleDirective
  * @package ByTIC\Configen\Apache\Htaccess\Directives
  */
-class IfModuleDirective extends AbstractEnclosure
+class FilesMatchDirective extends AbstractEnclosure
 {
-    protected $moduleName = '';
+    protected $condition = '';
 
     /**
      * @param string $module
@@ -20,7 +20,7 @@ class IfModuleDirective extends AbstractEnclosure
     public static function create($module, $directives)
     {
         $directive = new static();
-        $directive->setModuleName($module);
+        $directive->setCondition($module);
         $directive->setChildren($directives);
         return $directive;
     }
@@ -28,17 +28,17 @@ class IfModuleDirective extends AbstractEnclosure
     /**
      * @return string
      */
-    public function getModuleName(): string
+    public function getCondition(): string
     {
-        return $this->moduleName;
+        return $this->condition;
     }
 
     /**
-     * @param string $moduleName
+     * @param string $condition
      */
-    public function setModuleName(string $moduleName)
+    public function setCondition(string $condition)
     {
-        $this->moduleName = $moduleName;
+        $this->condition = $condition;
     }
 
     /**
@@ -46,7 +46,7 @@ class IfModuleDirective extends AbstractEnclosure
      */
     protected function generatePrefixContent()
     {
-        return '<IfModule ' . $this->moduleName . '.c>';
+        return '<FilesMatch "' . $this->condition . '">';
     }
 
     /**
@@ -54,6 +54,6 @@ class IfModuleDirective extends AbstractEnclosure
      */
     protected function generateSuffixContent()
     {
-        return '</IfModule>';
+        return '</FilesMatch>';
     }
 }

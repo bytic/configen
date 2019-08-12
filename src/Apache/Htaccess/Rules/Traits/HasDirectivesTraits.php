@@ -3,6 +3,7 @@
 namespace ByTIC\Configen\Apache\Htaccess\Rules\Traits;
 
 use ByTIC\Configen\AbstractConfig\Parts\AbstractPart;
+use ByTIC\Configen\AbstractConfig\Parts\EmptyLine;
 use ByTIC\Configen\Apache\Htaccess\Directives\AbstractDirective;
 
 /**
@@ -35,7 +36,11 @@ trait HasDirectivesTraits
         $directives = $this->getDirectives();
         $parts = [];
         foreach ($directives as $directive) {
-            $parts += $directive->generateConfigParts();
+            $directiveParts = $directive->generateConfigParts();
+            if (!empty($directiveParts)) {
+                $parts[] = new EmptyLine();
+                $parts = array_merge($parts, $directiveParts);
+            }
         }
         return $parts;
     }

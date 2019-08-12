@@ -2,6 +2,7 @@
 
 namespace ByTIC\Configen\AbstractConfig\Printer;
 
+use ByTIC\Configen\AbstractConfig\Parts\Enclosure;
 use ByTIC\Configen\AbstractConfig\Parts\SimpleText;
 
 /**
@@ -66,6 +67,36 @@ class GenericPrinter
     public function printSimpleText($part)
     {
         return $part->getContent();
+    }
+
+    /**
+     * @param Enclosure $part
+     * @param int $level
+     * @return string
+     */
+    public function printEnclosure($part, $level = 0)
+    {
+        $children = $part->getChildreen();
+        $return = $this->printIndentation($level) . $part->getPrefix() . "\n";
+        foreach ($children as $child) {
+            if ($child instanceof Enclosure) {
+                $return .= $this->printEnclosure($child, $level + 1);
+            } else {
+                $return .= $this->printIndentation($level + 1) . $this->generateForPart($child);
+            }
+            $return .= "\n";
+        }
+        $return .= $this->printIndentation($level) . $part->getSufix();
+        return $return;
+    }
+
+    /**
+     * @param int $cols
+     * @return string
+     */
+    public function printIndentation($cols = 1)
+    {
+        return str_repeat('    ', $cols);
     }
 
     /**

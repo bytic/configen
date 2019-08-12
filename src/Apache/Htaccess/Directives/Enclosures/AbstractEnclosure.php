@@ -2,6 +2,9 @@
 
 namespace ByTIC\Configen\Apache\Htaccess\Directives\Enclosures;
 
+use ByTIC\Configen\AbstractConfig\Parts\AbstractPart;
+use ByTIC\Configen\AbstractConfig\Parts\Enclosure;
+use ByTIC\Configen\AbstractConfig\Parts\SimpleText;
 use ByTIC\Configen\Apache\Htaccess\Directives\AbstractDirective;
 
 /**
@@ -10,4 +13,59 @@ use ByTIC\Configen\Apache\Htaccess\Directives\AbstractDirective;
  */
 abstract class AbstractEnclosure extends AbstractDirective
 {
+    /**
+     * @var AbstractDirective[]
+     */
+    protected $children;
+
+    /**
+     * @return mixed
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param mixed $children
+     */
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateConfigParts()
+    {
+        $header = new Enclosure(
+            $this->generatePrefixContent(),
+            $this->generateSuffixContent(),
+            $this->generateChildrenParts()
+        );
+        return [$header];
+    }
+
+    /**
+     * @return AbstractPart[]
+     */
+    protected function generateChildrenParts()
+    {
+        $parts = [];
+        foreach ($this->children as $directive) {
+            $parts = array_merge($parts, $directive->generateConfigParts());
+        }
+        return $parts;
+    }
+
+    /**
+     * @return string
+     */
+    abstract protected function generatePrefixContent();
+
+    /**
+     * @return string
+     */
+    abstract protected function generateSuffixContent();
 }

@@ -26,7 +26,7 @@ class HtaccessTest extends AbstractTest
         $htaccess->getSection('Media')->enableAllRules();
         $htaccess->getSection('Security')->enableAllRules();
 
-        $htaccess->addCommentHeadingOne('SPECIFIC APPLICATION CONFIG');
+//        $htaccess->addCommentHeadingOne('SPECIFIC APPLICATION CONFIG');
 
         static::assertSame(
             $htaccess->generate(),

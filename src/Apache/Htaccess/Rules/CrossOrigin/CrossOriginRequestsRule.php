@@ -2,6 +2,7 @@
 
 namespace ByTIC\Configen\Apache\Htaccess\Rules\CrossOrigin;
 
+use ByTIC\Configen\Apache\Htaccess\Directives\Enclosures\IfModuleDirective;
 use ByTIC\Configen\Apache\Htaccess\Directives\HeaderDirective;
 
 /**
@@ -23,7 +24,11 @@ https://www.w3.org/TR/cors/';
      */
     protected function createDirectives()
     {
-        $header = HeaderDirective::set(null, 'Access-Control-Allow-Origin', '"*"');
-        return [$header];
+        return [
+            IfModuleDirective::create(
+                'mod_headers',
+                [HeaderDirective::set(null, 'Access-Control-Allow-Origin', '"*"')]
+            )
+        ];
     }
 }
