@@ -2,6 +2,7 @@
 
 namespace ByTIC\Configen\AbstractConfig\Printer;
 
+use ByTIC\Configen\AbstractConfig\Parts\EmptyLine;
 use ByTIC\Configen\AbstractConfig\Parts\Enclosure;
 use ByTIC\Configen\AbstractConfig\Parts\SimpleText;
 
@@ -81,8 +82,15 @@ class GenericPrinter
         foreach ($children as $child) {
             if ($child instanceof Enclosure) {
                 $return .= $this->printEnclosure($child, $level + 1);
+            } elseif ($child instanceof EmptyLine) {
+                $return .= "\n";
             } else {
-                $return .= $this->printIndentation($level + 1) . $this->generateForPart($child);
+                $lines = $this->generateForPart($child);
+                $lines = explode("\n", $lines);
+                foreach ($lines as &$line) {
+                    $line = $this->printIndentation($level + 1) . $line;
+                }
+                $return .= implode("\n", $lines);
             }
             $return .= "\n";
         }

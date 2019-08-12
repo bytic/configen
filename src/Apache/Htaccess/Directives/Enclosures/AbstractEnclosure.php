@@ -39,12 +39,13 @@ abstract class AbstractEnclosure extends AbstractDirective
      */
     public function generateConfigParts()
     {
-        $header = new Enclosure(
+        $parts = parent::generateConfigParts();
+        $parts[] = new Enclosure(
             $this->generatePrefixContent(),
             $this->generateSuffixContent(),
             $this->generateChildrenParts()
         );
-        return [$header];
+        return $parts;
     }
 
     /**

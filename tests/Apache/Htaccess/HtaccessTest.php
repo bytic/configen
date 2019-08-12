@@ -23,6 +23,7 @@ class HtaccessTest extends AbstractTest
 
         $htaccess->getSection('CrossOrigin')->enableAllRules();
         $htaccess->getSection('Errors')->enableAllRules();
+        $htaccess->getSection('InternetExplorer')->enableAllRules();
         $htaccess->getSection('Media')->enableAllRules();
         $htaccess->getSection('Security')->enableAllRules();
 

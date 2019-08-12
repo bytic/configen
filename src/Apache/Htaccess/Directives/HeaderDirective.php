@@ -29,13 +29,23 @@ class HeaderDirective extends AbstractDirective
      * @param $condition
      * @param $name
      * @param $value
-     * @param $replacement
      * @param $additionalArgument
-     * @return HeaderDirective
+     * @return static
      */
     public static function set($condition, $name, $value, $additionalArgument = null)
     {
         $header = static::create($condition, 'set', $name, $value, null, $additionalArgument);
+        return $header;
+    }
+
+    /**
+     * @param $condition
+     * @param $name
+     * @return static
+     */
+    public static function unset($condition, $name)
+    {
+        $header = static::create($condition, 'unset', $name);
         return $header;
     }
 
@@ -48,7 +58,7 @@ class HeaderDirective extends AbstractDirective
      * @param $additionalArgument
      * @return HeaderDirective
      */
-    public static function create($condition, $action, $name, $value, $replacement = null, $additionalArgument = null)
+    public static function create($condition, $action, $name, $value = null, $replacement = null, $additionalArgument = null)
     {
         $header = new static();
         if ($condition) {
@@ -67,8 +77,9 @@ class HeaderDirective extends AbstractDirective
      */
     public function generateConfigParts()
     {
-        $header = new SimpleText($this->generate());
-        return [$header];
+        $parts = parent::generateConfigParts();
+        $parts[] = new SimpleText($this->generate());
+        return $parts;
     }
 
     /**

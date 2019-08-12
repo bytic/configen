@@ -2,6 +2,10 @@
 
 namespace ByTIC\Configen\Apache\Htaccess\Rules\Security;
 
+use ByTIC\Configen\Apache\Htaccess\Directives\Enclosures\FilesMatchDirective;
+use ByTIC\Configen\Apache\Htaccess\Directives\Enclosures\IfModuleDirective;
+use ByTIC\Configen\Apache\Htaccess\Directives\HeaderDirective;
+
 /**
  * Class SecurityClickjackingRule
  * @package ByTIC\Configen\Apache\Htaccess\Rules\Security
@@ -19,7 +23,7 @@ the web page in any frame.
 This might not be the best setting for everyone. You should read
 about the other two possible values the `X-Frame-Options` header
 field can have: `SAMEORIGIN` and `ALLOW-FROM`.
-https://tools.ietf.org/html/rfc7034section-2.1.
+https://tools.ietf.org/html/rfc7034#section-2.1.
 
 Keep in mind that while you could send the `X-Frame-Options` header
 for all of your website’s pages, this has the potential downside that
@@ -45,6 +49,18 @@ https://www.owasp.org/index.php/Clickjacking';
      */
     protected function createDirectives()
     {
-        return [];
+        return [
+            IfModuleDirective::create(
+                'mod_headers',
+                [
+                    FilesMatchDirective::create(
+                        '\.(appcache|atom|bbaw|bmp|br|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|gz|htc|ic[os]|jpe?g|m?js|json(ld)?|m4[av]|manifest|map|markdown|md|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|wasm|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$',
+                        [
+                            HeaderDirective::unset(null, 'Access-Control-Allow-Origin', '"*"')
+                        ]
+                    )
+                ]
+            )
+        ];
     }
 }

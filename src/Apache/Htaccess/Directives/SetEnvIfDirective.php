@@ -35,8 +35,9 @@ class SetEnvIfDirective extends AbstractDirective
      */
     public function generateConfigParts()
     {
-        $header = new SimpleText($this->generate());
-        return [$header];
+        $parts = parent::generateConfigParts();
+        $parts[] = new SimpleText($this->generate());
+        return $parts;
     }
 
     /**

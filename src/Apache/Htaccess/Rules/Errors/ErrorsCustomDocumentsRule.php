@@ -2,6 +2,8 @@
 
 namespace ByTIC\Configen\Apache\Htaccess\Rules\Errors;
 
+use ByTIC\Configen\Apache\Htaccess\Directives\ErrorDocumentDirective;
+
 /**
  * Class ErrorsCustomDocumentsRule
  * @package ByTIC\Configen\Apache\Htaccess\Rules\Errors
@@ -18,6 +20,28 @@ https://httpd.apache.org/docs/current/mod/core.html#errordocument';
      */
     protected function createDirectives()
     {
-        return [];
+        $directives = [];
+        $codes = $this->getEnabledCodes();
+        foreach ($codes as $code) {
+            $directives[] = $this->generateDirective($code);
+        }
+        return $directives;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnabledCodes()
+    {
+        return ['403', '404', '500'];
+    }
+
+    /**
+     * @param $code
+     * @return ErrorDocumentDirective
+     */
+    protected function generateDirective($code)
+    {
+        return ErrorDocumentDirective::create($code, '/' . $code);
     }
 }

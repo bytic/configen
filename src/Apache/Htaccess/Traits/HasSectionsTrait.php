@@ -5,6 +5,8 @@ namespace ByTIC\Configen\Apache\Htaccess\Traits;
 use ByTIC\Configen\Apache\Htaccess\Rules\AbstractRule;
 use ByTIC\Configen\Apache\Htaccess\Sections\AbstractSection;
 use ByTIC\Configen\Apache\Htaccess\Sections\CrossOriginSection;
+use ByTIC\Configen\Apache\Htaccess\Sections\ErrorsSection;
+use ByTIC\Configen\Apache\Htaccess\Sections\InternetExplorerSection;
 
 /**
  * Trait HasSectionsTrait
@@ -89,7 +91,9 @@ trait HasSectionsTrait
     public function getSectionOrder()
     {
         return [
-            CrossOriginSection::$name
+            CrossOriginSection::$name,
+            ErrorsSection::$name,
+            InternetExplorerSection::$name,
         ];
     }
 }

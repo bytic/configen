@@ -49,7 +49,7 @@ trait HasRulesTrait
     {
         $class = $this->generateRuleClass($name);
         if (!class_exists($class)) {
-            throw new \Exception("Invalid rule name [$name]");
+            throw new \Exception("Invalid rule name [$name] class not found [$class]");
         }
         $rule = new $class;
         $this->addRule($rule);
@@ -67,6 +67,7 @@ trait HasRulesTrait
             [
                 'CrossOrigin' => 'CrossOrigin\CrossOrigin',
                 'Errors' => 'Errors\Errors',
+                'InternetExplorer' => 'InternetExplorer\InternetExplorer',
                 'Media' => 'Media\Media',
                 'Security' => 'Security\Security'
             ]

@@ -3,6 +3,7 @@
 namespace ByTIC\Configen\Apache\Htaccess\Sections;
 
 use ByTIC\Configen\Apache\Htaccess\Rules\Errors\ErrorsCustomDocumentsRule;
+use ByTIC\Configen\Apache\Htaccess\Rules\Errors\ErrorsErrorPreventionRule;
 
 /**
  * Class CrossOriginSection
@@ -21,6 +22,7 @@ class ErrorsSection extends AbstractSection
     {
         return [
             ErrorsCustomDocumentsRule::$name,
+            ErrorsErrorPreventionRule::$name,
         ];
     }
 }
