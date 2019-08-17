@@ -19,7 +19,7 @@ abstract class AbstractDirective
     public function generateConfigParts()
     {
         if ($this->hasComments()) {
-            return [$this->generateConfigPartsComment(), new EmptyLine()];
+            return [new EmptyLine(),$this->generateConfigPartsComment()];
         }
         return [];
     }
@@ -32,6 +32,9 @@ abstract class AbstractDirective
         return new Comment($this->getComments());
     }
 
+    /**
+     * @return bool
+     */
     public function hasComments()
     {
         return !empty($this->comments);

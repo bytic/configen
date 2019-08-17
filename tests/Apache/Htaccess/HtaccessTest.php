@@ -30,8 +30,8 @@ class HtaccessTest extends AbstractTest
 //        $htaccess->addCommentHeadingOne('SPECIFIC APPLICATION CONFIG');
 
         static::assertSame(
-            $htaccess->generate(),
-            file_get_contents(TEST_FIXTURES . '/Apache/Htaccess/boilarplate.htaccess')
+            file_get_contents(TEST_FIXTURES . '/Apache/Htaccess/boilarplate.htaccess'),
+            $htaccess->generate()
         );
     }
 }

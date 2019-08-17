@@ -83,7 +83,6 @@ class GenericPrinter
             if ($child instanceof Enclosure) {
                 $return .= $this->printEnclosure($child, $level + 1);
             } elseif ($child instanceof EmptyLine) {
-                $return .= "\n";
             } else {
                 $lines = $this->generateForPart($child);
                 $lines = explode("\n", $lines);

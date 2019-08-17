@@ -125,11 +125,9 @@ Options -MultiViews
     # `mod_headers` cannot match based on the content-type, however,
     # the `X-UA-Compatible` response header should be send only for
     # HTML documents and not for the other resources.
-
     <FilesMatch "\.(appcache|atom|bbaw|bmp|br|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|gz|htc|ic[os]|jpe?g|m?js|json(ld)?|m4[av]|manifest|map|markdown|md|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|wasm|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$">
         Header unset X-UA-Compatible
     </FilesMatch>
-
 </IfModule>
 
 # ----------------------------------------------------------------------
@@ -160,26 +158,23 @@ Options -MultiViews
 
 <IfModule mod_mime.c>
 
-  # Data interchange
-    AddType application/atom+xml                        atom
-    AddType application/json                            json map topojson
-    AddType application/ld+json                         jsonld
-    AddType application/rss+xml                         rss
-    AddType application/vnd.geo+json                    geojson
-    AddType application/xml                             rdf xml
+    # Data interchange
+    AddType application/atom+xml                         atom
+    AddType application/json                             json map topojson
+    AddType application/ld+json                          jsonld
+    AddType application/rss+xml                          rss
+    AddType application/vnd.geo+json                     geojson
+    AddType application/xml                              rdf xml
 
-
-  # JavaScript
+    # JavaScript
     # Normalize to standard type.
     # https://tools.ietf.org/html/rfc4329#section-7.2
+    AddType application/javascript                       js
 
-    AddType application/javascript                      js
-
-
-  # Manifest files
-    AddType application/manifest+json                   webmanifest
-    AddType application/x-web-app-manifest+json         webapp
-    AddType text/cache-manifest                         appcache
+    # Manifest files
+    AddType application/manifest+json                    webmanifest
+    AddType application/x-web-app-manifest+json          webapp
+    AddType text/cache-manifest                          appcache
 
 
   # Media files
