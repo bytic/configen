@@ -69,6 +69,7 @@ trait HasRulesTrait
                 'Errors' => 'Errors\Errors',
                 'InternetExplorer' => 'InternetExplorer\InternetExplorer',
                 'Media' => 'Media\Media',
+                'Rewrites' => 'Rewrites\Rewrites',
                 'Security' => 'Security\Security'
             ]
         );

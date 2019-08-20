@@ -53,14 +53,24 @@ https://www.owasp.org/index.php/Clickjacking';
             IfModuleDirective::create(
                 'mod_headers',
                 [
-                    FilesMatchDirective::create(
-                        '\.(appcache|atom|bbaw|bmp|br|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|gz|htc|ic[os]|jpe?g|m?js|json(ld)?|m4[av]|manifest|map|markdown|md|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|wasm|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$',
-                        [
-                            HeaderDirective::unset(null, 'Access-Control-Allow-Origin', '"*"')
-                        ]
-                    )
+                    HeaderDirective::set('', 'X-Frame-Options', '"DENY"'),
+                    $this->createDirectiveXFrame(),
                 ]
             )
         ];
+    }
+
+    protected function createDirectiveXFrame()
+    {
+        $directive = FilesMatchDirective::create(
+            '\.(appcache|atom|bbaw|bmp|br|crx|css|cur|eot|f4[abpv]|flv|geojson|gif|gz|htc|ic[os]|jpe?g|m?js|json(ld)?|m4[av]|manifest|map|markdown|md|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|topojson|tt[cf]|txt|vcard|vcf|vtt|wasm|webapp|web[mp]|webmanifest|woff2?|xloc|xml|xpi)$',
+            [
+                HeaderDirective::unset(null, 'X-Frame-Options')
+            ]
+        );
+        $directive->setComments('`mod_headers` cannot match based on the content-type, however,
+the `X-Frame-Options` response header should be send only for
+HTML documents and not for the other resources.');
+        return $directive;
     }
 }

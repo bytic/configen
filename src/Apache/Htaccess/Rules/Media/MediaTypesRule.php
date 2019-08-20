@@ -4,6 +4,8 @@ namespace ByTIC\Configen\Apache\Htaccess\Rules\Media;
 
 use ByTIC\Configen\Apache\Htaccess\Directives\AddTypeDirective;
 use ByTIC\Configen\Apache\Htaccess\Directives\Enclosures\IfModuleDirective;
+use ByTIC\Configen\MediaTypes\MediaTypeCollections;
+use Exception;
 
 /**
  * Class ErrorsCustomDocumentsRule
@@ -18,6 +20,40 @@ class MediaTypesRule extends AbstractRule
 https://www.iana.org/assignments/media-types/media-types.xhtml
 https://httpd.apache.org/docs/current/mod/mod_mime.html#addtype';
 
+    protected $fileTypes = [];
+
+    public function __construct()
+    {
+        parent::__construct();
+        /** @noinspection PhpUnhandledExceptionInspection */
+        $this->initAllTypes();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function initAllTypes()
+    {
+        $types = MediaTypeCollections::types();
+        foreach ($types as $type => $extensions) {
+            $this->addType($type, $extensions);
+        }
+    }
+
+    /**
+     * @param $type
+     * @param null $extensions
+     * @throws Exception
+     */
+    public function addType($type, $extensions = null)
+    {
+        $extensions = !is_array($extensions) ?: MediaTypeCollections::getExtensions($type);
+        if (!is_array($extensions) || count($extensions) < 1) {
+            throw new Exception("Type [{$type}] needs extensions array. None found");
+        }
+        $this->fileTypes[$type] = $extensions;
+    }
+
     /**
      * @inheritDoc
      */
@@ -26,11 +62,7 @@ https://httpd.apache.org/docs/current/mod/mod_mime.html#addtype';
         return [
             IfModuleDirective::create(
                 'mod_mime',
-                array_merge(
-                    $this->generateDataInterchangeDirectives(),
-                    $this->generateJavaScriptDirectives(),
-                    $this->generateManifestFilesDirectives()
-                )
+                $this->generateDirectivesFromTypes()
             )
         ];
     }
@@ -38,44 +70,43 @@ https://httpd.apache.org/docs/current/mod/mod_mime.html#addtype';
     /**
      * @return array
      */
-    protected function generateDataInterchangeDirectives()
+    protected function generateDirectivesFromTypes()
     {
-        $atomDirective = AddTypeDirective::create('application/atom+xml', 'atom');
-        $atomDirective->setComments('Data interchange');
-        return [
-            $atomDirective,
-            AddTypeDirective::create('application/json', 'json', 'map', 'topojson'),
-            AddTypeDirective::create('application/ld+json', 'jsonld'),
-            AddTypeDirective::create('application/rss+xml', 'rss'),
-            AddTypeDirective::create('application/vnd.geo+json', 'geojson'),
-            AddTypeDirective::create('application/xml', 'rdf', 'xml')
-        ];
+        $collections = MediaTypeCollections::collections();
+        $fileTypes = $this->fileTypes;
+        $directives = [];
+
+        foreach ($collections as $collectionName => $collection) {
+            $first = true;
+            foreach ($collection['types'] as $typeName) {
+                $extensions = isset($fileTypes[$typeName]) ? $fileTypes[$typeName] : [];
+                if (count($extensions)) {
+                    $comment = $first ? $collection['description'] : false;
+                    $directives[] = $this->generateDirectiveForType($typeName, $extensions, $comment);
+                    $first = false;
+                    unset($fileTypes[$typeName]);
+                }
+            }
+        }
+
+        foreach ($fileTypes as $typeName => $extensions) {
+            $directives[] = $this->generateDirectiveForType($typeName, $extensions);
+        }
+        return $directives;
     }
 
     /**
-     * @return array
+     * @param $type
+     * @param $extensions
+     * @param bool $comment
+     * @return AddTypeDirective
      */
-    protected function generateJavaScriptDirectives()
+    protected function generateDirectiveForType($type, $extensions, $comment = false)
     {
-        $directive = AddTypeDirective::create('application/javascript', 'js');
-        $directive->setComments('JavaScript
-Normalize to standard type.
-https://tools.ietf.org/html/rfc4329#section-7.2');
-        return [
-            $directive
-        ];
-    }
-    /**
-     * @return array
-     */
-    protected function generateManifestFilesDirectives()
-    {
-        $directive = AddTypeDirective::create('application/manifest+json', 'webmanifest');
-        $directive->setComments('Manifest files');
-        return [
-            $directive,
-            AddTypeDirective::create('application/x-web-app-manifest+json', 'webapp'),
-            AddTypeDirective::create('text/cache-manifest', 'appcache')
-        ];
+        $directive = AddTypeDirective::create($type, ...$extensions);
+        if ($comment) {
+            $directive->setComments($comment);
+        }
+        return $directive;
     }
 }

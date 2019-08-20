@@ -25,6 +25,7 @@ class HtaccessTest extends AbstractTest
         $htaccess->getSection('Errors')->enableAllRules();
         $htaccess->getSection('InternetExplorer')->enableAllRules();
         $htaccess->getSection('Media')->enableAllRules();
+        $htaccess->getSection('Rewrites')->enableAllRules();
         $htaccess->getSection('Security')->enableAllRules();
 
 //        $htaccess->addCommentHeadingOne('SPECIFIC APPLICATION CONFIG');
